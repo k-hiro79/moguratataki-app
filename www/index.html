@@ -1,0 +1,342 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <script src="components/loader.js"></script>
+    <script src="components/mogura_beta.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="lib/onsenui/js/onsenui.min.js"></script>
+    <!-- メイン -->
+    <script src="components/main.js"></script>
+    <!-- -------------------------- -->
+    <!-- 評価リスト -->
+    <script src = "list.json"></script>
+    <!-- -------------------------- -->
+    <link rel="stylesheet" href="components/loader.css">
+    <link rel="stylesheet" href="lib/onsenui/css/onsenui.css">
+    <link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.css">
+
+    <!-- スタイル -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- -------------------------- -->
+  </head>
+  <script>
+    // リザルト画面評価の入力
+    document.addEventListener('init', function(event) {
+      const evaluation = document.getElementById('evaluation');
+      const comment = document.getElementById('result_bun');
+      var page = event.target;
+      if (page.matches('#result-page')) {
+        //評価とコメントの入力
+        // tokutenn はmain.jsより取得
+        // 評価C
+        if(tokutenn < 250){
+          evaluation.textContent=list[3].evaluation;
+          comment.textContent=list[3].comment;
+        }
+        // 評価B
+        else if(tokutenn >=250 && tokutenn < 500){
+          evaluation.textContent=list[2].evaluation;
+          comment.textContent=list[2].comment;
+        }
+        // 評価A
+        else if(tokutenn >=500 && tokutenn < 900){
+          evaluation.textContent=list[2].evaluation;
+          comment.textContent=list[2].comment;
+        }
+        // 評価S
+        else if(tokutenn >= 900){
+          evaluation.textContent=list[0].evaluation;
+          comment.textContent=list[0].comment;
+        }
+      }
+    });
+  </script>
+
+  <body>
+    <ons-navigator id="navigator" page="start.html"></ons-navigator>
+
+    <!--スタート画面-->
+    <ons-template id="start.html">
+      <ons-page id="start-page">
+
+        <div class="content_start" style="text-align: center">
+          <h1 class="title">モグラと遊ぶ<br>休み時間<span class="two">Ⅱ</span></h1>
+          <div class="vs">
+            <img class="man" src="./img/pose_pistol_man.png" alt="">
+            <img class="mark" src="./img/text_versus_vs.png" alt="">
+            <img src="./img/mogura.png" alt="">
+          </div>
+          <p class="syoukaibun">外出自粛が終わり、みんながやっと学校に行けるようになった！久しぶりに学校に行ってみると、、、
+          なんと！！グラウンドがモグラたちに荒らされて穴だらけになっている!休み時間を使ってみんなでモグラを退治しよう！
+          </p>
+          <ons-button id="push-button">ステージ選択</ons-button>
+          <ons-button id="push-rule-button">ルール説明</ons-button>
+          <ons-button id="push-ranking-button">ランキング</ons-button>
+        </div>
+      </ons-page>
+    </ons-template>
+    <!-- ------------------------------------------------------------ -->
+
+    <!-- ステージ選択画面 -->
+    <ons-template id="stage_choose.html">
+      <ons-page id="stage_choose-page">
+
+        <div class="content_stage_choose" style="text-align: center">
+          <div class="stage_choose_title">
+            <h2>ステージ一覧</h2>
+          </div>
+          
+          <ons-button id="push-stage1-button">
+            <div>
+              <h2 class="stage1_title">グラウンド</h2>
+              <ul class="special_rule">
+                <li>制限時間30秒</li>
+                <li>特殊得点加算なし</li>
+                <li>特殊得点減点なし</li>
+              </ul>
+            </div>
+          </ons-button>
+
+          <ons-button id="push-stage2-button">
+            <div>
+              <h2 class="stage2_title">芝生</h2>
+              <ul class="special_rule">
+                <li>制限時間25秒</li>
+                <li>特殊得点加算あり(+10)</li>
+                <li>特殊得点減点なし</li>
+              </ul>
+            </div>
+          </ons-button>
+          
+          <ons-button id="push-stage3-button">
+            <div>
+              <h2 class="stage3_title">学校畑</h2>
+              <ul class="special_rule">
+                <li>制限時間20秒</li>
+                <li>特殊得点加算あり</li>
+                <li>特殊得点減点あり</li>
+              </ul>
+            </div>
+          </ons-button>
+          
+        </div>
+      </ons-page>
+    </ons-template>
+
+
+    <!-- ------------------------------------------------------------ -->
+
+    <!-- ルール説明画面 -->
+    <ons-template id="rule.html">
+      <ons-page id="rule-page">
+
+        <div class="content_rule" style="text-align: center">
+          <div class="rule">
+            <h2 class="rule_title">ルール説明！</h2>
+            <div class="sousa">
+              <h2>操作方法</h2>
+              <ul>
+                <li>タップでモグラを退治しよう！</li>
+                <li>モグラには複数種類がいるぞ！得点が高いモグラもいれば減点されるモグラもいるぞ！</li>
+              </ul>
+            </div>
+            <div class="target">
+              <h2>ターゲットはこいつらだ！</h2>
+              <div class="mogura">
+                <div class="mogurasyoukai">
+                  <img src="./img/ana303.gif" alt="">              
+                  <p>30点の看板を掲げたモグラ。<br>本体は中に隠れているがタップして壊すと逃げていくぞ！</p>
+                </div>
+                <div class="mogurasyoukai">
+                  <img src="./img/ana113.gif" alt="">
+                  <p>-10点の看板を掲げたモグラ。<br>本体は中に隠れているがタップして壊すと逃げていくぞ！</p>
+                </div>
+                <div class="mogurasyoukai">
+                  <img src="./img/ana103.gif" alt="">
+                  <p>10点の看板を掲げたモグラ。<br>本体は中に隠れているがタップして壊すと逃げていくぞ！</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ons-button id="pop-button" >戻る</ons-button>
+        </div>
+      </ons-page>
+    </ons-template>
+    <!-- ------------------------------------------------------------ -->
+
+    <!-- ゲーム画面(ステージ1) -->
+    <ons-template id="game_stage1.html">
+      <ons-page id="game_stage1-page">
+        <div class="content_game1" id="second" style="text-align: center">
+          <div class="game" align="center"> 
+              
+              <div class="info" name="FORM1">
+                <div class="infobox">
+                  <b>SCORE</b>
+                  <h3 class="var" id="score">0</h3>
+                </div>
+                <div class="infobox">
+                  <b>TIME</b>
+                  <h3 class="var" id="time">0</h3>
+                </div>
+              </div>        
+              <!-- モグラテーブル -->
+              
+              <div class="moguratataki">
+                <!-- width="64" height="64"  -->
+                <!-- 1行目 -->
+                <img id="mogu_click0" name="item0">
+                <img id="mogu_click1" name="item1">
+                <img id="mogu_click2" name="item2">
+                <img id="mogu_click3" name="item3">
+                <!-- ２行目 -->
+                <img id="mogu_click4" name="item4">
+                <img id="mogu_click5" name="item5">
+                <img id="mogu_click6" name="item6">
+                <img id="mogu_click7" name="item7">
+                <!-- ３行目 -->
+                <img id="mogu_click8" name="item8">
+                <img id="mogu_click9" name="item9">
+                <img id="mogu_click10" name="item10">
+                <img id="mogu_click11" name="item11">
+                <!-- ４行目 -->
+                <img id="mogu_click12" name="item12">
+                <img id="mogu_click13" name="item13">
+                <img id="mogu_click14" name="item14">
+                <img id="mogu_click15" name="item15"> 
+                <!-- ５行目 -->
+                <img id="mogu_click16" name="item16">
+                <img id="mogu_click17" name="item17">
+                <img id="mogu_click18" name="item18">                    
+                <img id="mogu_click19" name="item19">
+                <!-- ６行目 -->
+                <img id="mogu_click20" name="item20">
+                <img id="mogu_click21" name="item21">
+                <img id="mogu_click22" name="item22">
+                <img id="mogu_click23" name="item23">
+              </div>
+              <input id="start" TYPE="button" value="スタート！" name="button">
+              <div class="black_back" id="black"></div>
+              <!-- カウントダウンフォーム -->
+              <section class="hidden" id="countdown"></section>
+              <!-- 時間切れフォーム -->
+              <section class="hidden" id="stop">
+                <h2>そこまで！</h2>
+                <h2>どれくらい叩けたかな？</h2>
+                <ons-button id="push-button">評価をもらおう！</ons-button>
+              </section>
+          </div>
+        </div>
+      </ons-page>
+    </ons-template>
+    <!-- ------------------------------------------------------------ -->
+
+    <!-- ゲーム画面(ステージ2) -->
+    <ons-template id="game_stage2.html">
+      <ons-page id="game_stage2-page">
+        <div class="content_game2" id="second" style="text-align: center">
+          <div class="game" align="center"> 
+            
+              <div class="info" name="FORM1">
+                <div class="infobox">
+                  <b>SCORE</b>
+                  <h3 class="var" id="score">0</h3>
+                </div>
+                <div class="infobox">
+                  <b>TIME</b>
+                  <h3 class="var" id="time">0</h3>
+                </div>
+              </div>
+            
+              <!-- モグラテーブル -->
+              <div class="moguratataki">
+                <!-- width="64" height="64"  -->
+                <!-- 1行目 -->
+                <img id="mogu_click0" name="item0">
+                <img id="mogu_click1" name="item1">
+                <img id="mogu_click2" name="item2">
+                <img id="mogu_click3" name="item3">
+                <!-- ２行目 -->
+                <img id="mogu_click4" name="item4">
+                <img id="mogu_click5" name="item5">
+                <img id="mogu_click6" name="item6">
+                <img id="mogu_click7" name="item7">
+                <!-- ３行目 -->
+                <img id="mogu_click8" name="item8">
+                <img id="mogu_click9" name="item9">
+                <img id="mogu_click10" name="item10">
+                <img id="mogu_click11" name="item11">
+                <!-- ４行目 -->
+                <img id="mogu_click12" name="item12">
+                <img id="mogu_click13" name="item13">
+                <img id="mogu_click14" name="item14">
+                <img id="mogu_click15" name="item15"> 
+                <!-- ５行目 -->
+                <img id="mogu_click16" name="item16">
+                <img id="mogu_click17" name="item17">
+                <img id="mogu_click18" name="item18">                    
+                <img id="mogu_click19" name="item19">
+                <!-- ６行目 -->
+                <img id="mogu_click20" name="item20">
+                <img id="mogu_click21" name="item21">
+                <img id="mogu_click22" name="item22">
+                <img id="mogu_click23" name="item23">
+              </div>
+              <input id="start" TYPE="button" value="スタート！" name="button">
+              <div class="black_back" id="black"></div>
+              
+              <!-- カウントダウンフォーム -->
+              <section class="hidden" id="countdown"></section>
+              <!-- 時間切れフォーム -->
+              <section class="hidden" id="stop">
+                <h2>そこまで！</h2>
+                <h2>どれくらい叩けたかな？</h2>
+                <ons-button id="push-button">教室に戻ろう！</ons-button>
+              </section>
+          </div>
+        </div>
+      </ons-page>
+    </ons-template>
+
+    <!-- -----------------------------------------------------------  -->
+
+    <!-- リザルト画面 -->
+    <ons-template id="result.html">
+      <ons-page id="result-page">
+        <div class="content_result" style="text-align: center">
+          <div class="result">
+            <h2 class="kekka">結果発表！</h2>
+            <h1 class="tennsuu"><span id='tokutenn'></span>点</h1>
+            <div class="hyouka">
+              <h2 class="daimei">評価<span id="evaluation"></span></h2>
+              <p id="result_bun"></p>
+            </div>
+          </div>
+          <ons-button id="pop-button">スタート画面に戻る</ons-button>
+          <ons-button id="push-button">ランキングを見る</ons-button>
+        </div>
+      </ons-page>
+    </ons-template>
+    <!-- -----------------------------------------------------------  -->
+
+    <!-- ランキング画面 -->
+    <ons-template id="ranking.html">
+      <ons-page id="ranking-page">
+        <div class="content_ranking" style="text-align: center">
+          <div class="ranking">
+            <h2 class="ranking_title">スコアランキング</h2>
+            <div class="rank" id="number1"></div>
+            <div class="rank" id="number2"></div>
+            <div class="rank" id="number3"></div>
+            <div class="rank" id="number4"></div>
+            <div class="rank" id="number5"></div>
+          </div>
+          <ons-button id="pop-start-button">スタート画面に戻る</ons-button>
+        </div>
+      </ons-page>
+    </ons-template>
+  </body>
+</html>
