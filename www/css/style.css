@@ -39,6 +39,12 @@ body{
   background-image:url(../img/game2.jpg) !important;
   background-size: cover;
 }
+.content_game3{
+  padding-top: 35px;
+  height: 100%;
+  background-image:url(../img/game3.jpg) !important;
+  background-size: cover;
+}
 /* リザルト画面 */
 .content_result{
   padding-top: 35px;
@@ -144,57 +150,35 @@ body{
   font-weight: bold;
   text-shadow: 1px 3px 2px #0c0b0c;
 }
+.push-stage-button{
+  text-align: left;
+  width: 95%;
+  margin: 10px auto;
+  height: 25%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+  font-weight: bold;
+  text-shadow: 1px 3px 2px #0c0b0c;
+  letter-spacing: 1px;
+}
+.push-stage-button h2{
+  font-weight: bold !important;
+  padding: 8px;
+  color: white;
+}
 
 #push-stage1-button{
-  text-align: left;
-  width: 95%;
-  margin: 10px auto;
-  height: 25%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
   background-image:url(../img/game1.jpg) !important;
   background-size: cover;
-  font-weight: bold;
-  text-shadow: 1px 3px 2px #0c0b0c;
-  letter-spacing: 1px;
 }
-#push-stage1-button h2{
-  padding: 8px;
-  color: white;
-}
-
 #push-stage2-button{
-  text-align: left;
-  width: 95%;
-  margin: 10px auto;
-  height: 25%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
   background-image:url(../img/game2.jpg) !important;
   background-size: cover;
-  font-weight: bold;
-  text-shadow: 1px 3px 2px #0c0b0c;
-  letter-spacing: 1px;
 }
-#push-stage2-button h2{
-  padding: 8px;
-  color: white;
-}
-
 #push-stage3-button{
-  text-align: left;
-  width: 95%;
-  margin: 10px auto;
-  height: 25%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
   background-image:url(../img/game3.jpg) !important;
   background-size: cover;
-  font-weight: bold;
-  text-shadow: 1px 3px 2px #0c0b0c;
-  letter-spacing: 1px;
 }
-#push-stage3-button h2{
-  color: white;
-  padding: 8px;
-}
+
 
 .special_rule{
   list-style: none;

@@ -2,29 +2,15 @@
 var ncmb = new NCMB("0c9a82e830db0ad436ded1fe381fc5e425f03a2bbf094646cb3ab55ad2de5282","012325c75e891197034ff06d13928b66ba75a54d7936719c6507599d6173028b");
 
 
-//スコアの保存
+// スコアの保存
 // ハイスコアのクラス作成
 var ScoreClass = ncmb.DataStore("HighScore");
 
 // スコア格納用
 let scores = [0,0,0,0,0];
 
-//現在のランキングの取得
-var highScore = ncmb.DataStore("HighScore");highScore.order("score", true)
-.limit(5)
-.fetchAll()
-.then(function(results){
-  //ランキング取得後の処理
-  for (let i = 0; i < results.length; i++) {
-    let object= results[i];
-    scores[i] = object.score;
-    console.log(scores[i]);
-  }
-})
-.catch(function(err){
-  //エラー時の処理
-});
-
+// ハイスコアインスタンス生成
+var highScore = ncmb.DataStore("HighScore");
 
 ///////////// 画像位置指定 /////
 var ana_n = new Image(); 
@@ -214,14 +200,21 @@ class Main{
     if ((this.m_joutai[n] == 1)||(this.m_joutai[n] == 2)||(this.m_joutai[n] == 3)||(this.m_joutai[n] == 4)||(this.m_joutai[n] == 5)||(this.m_joutai[n] == 6)){
       if(this.m_hits[n] == 0){	// まだ殴られて無ければ
         this.m_toku_now += this.m_j_point[n];
-
         // ステージ2の場合、-10以外をタップしたら10点追加
         if(stage === 2 && this.m_j_point[n] !== -10){
           this.m_toku_now += 5;
         }
-
+        if(stage === 3 && this.m_j_point[n] !== -10){
+          this.m_toku_now += 10;
+        }
         this.m_hits[n] = 1;
       }
+    }
+    if(this.m_joutai[n] == 0 && stage == 2) {
+      this.m_toku_now -= 5;
+    }	
+    if(this.m_joutai[n] == 0 && stage == 3) {
+      this.m_toku_now -= 10;
     }	
   }		
 
@@ -246,13 +239,36 @@ class Main{
         this.m_max = 7;
       }
     }
+    if(stage == 3){
+      if(this.m_time_now == 10){
+        this.m_max = 7;
+      }
+      else if(this.m_time_now == 5){
+        this.m_max = 10;
+      }
+    }
 
+    // ゲーム終了時
     if (this.m_time_now == 0){
       clearTimeout(this.mogu_ti);
       clearTimeout(this.timeOutId);
       this.s_flag = 0;
       this.m_time_now = this.m_time;
+      /////////////////////スコア保存///////////////////
+      // インスタンス生成
       tokutenn = this.m_toku_now;
+      var score = new ScoreClass();
+      score.set("score", tokutenn);
+      score.save()
+       .then(function (){
+           //保存成功時の処理
+           console.log('score_ok');
+       })
+       .catch(function (error){
+           //失敗時の処理
+           console.log(error);
+       });
+      /////////////////////////////////////////////////
       this.m_toku_now = 0;
       stage = 0;
       for (let i = 0; i < 24; i++){
@@ -288,7 +304,7 @@ class Main{
     game_music.play();   
   }, false);
 
-  const click_sound = new Audio("./bgm/打撃音.mp3");
+  const click_sound = new Audio("./bgm/打撃音2.mp3");
   click_sound.preload = "auto";
 
   const whistle = new Audio("./bgm/syuuryou.mp3");
@@ -310,6 +326,23 @@ document.addEventListener('init', function(event) {
 
   //////////////////////////スタート画面/////////////////////////////////
   if (page.matches('#start-page')) {
+
+    //現在のランキングの取得
+    highScore.order("score", true)
+    .limit(5)
+    .fetchAll()
+    .then(function(results){
+      //ランキング取得後の処理
+      for (let i = 0; i < results.length; i++) {
+        let object= results[i];
+        scores[i] = object.score;
+        console.log(scores[i]);
+      }
+    })
+    .catch(function(err){
+      //エラー時の処理
+      console.log('err');
+    });
     //bgm
     start_music.play();
     // ステージ選択画面へ
@@ -391,23 +424,40 @@ document.addEventListener('init', function(event) {
       document.querySelector('#navigator').pushPage('result.html');
     };
   }
+  ///////////////////////////ゲーム画面(ステージ3)////////////////////////////
+  if (page.matches('#game_stage3-page')) {
+    // bgm
+    start_music.pause();
+    start_music.currentTime = 0;
+    // インスタンス生成
+    const main = new Main(2,20,5);//スピード,ゲーム時間（秒）,モグラの最大数
+    // スタートボタンが押されたとき
+    document.getElementById('start').addEventListener('click', ()=>{
+      main.m_start();
+    });
+    //穴用配列
+    const mogu_clicks = new Array(23);
+    for(let i = 0;i<24;i++){
+      // 要素取得
+      mogu_clicks[i] = document.getElementById(`mogu_click${i}`);
+      // 穴画像挿入
+      mogu_clicks[i].src = "./img/ana01.gif";
+    }
+    // モグラの穴がタップされたとき
+    mogu_clicks.forEach((mogu_click,index)=>{
+      mogu_click.addEventListener('click',()=>{
+        main.mogu_click(index);
+      });
+    });
+    // リザルト画面へ
+    page.querySelector('#push-button').onclick = function() {
+      document.querySelector('#navigator').pushPage('result.html');
+    };
+  }
 
   //////////////////////////////////////リザルト画面//////////////////////////
   if (page.matches('#result-page')) {
-
-
-    /////////////////////スコア保存///////////////////
-    console.log(tokutenn);
-    // インスタンス生成
-    var score = new ScoreClass();
-    score.set("score", tokutenn);
-    score.save()
-     .then(function (){
-         //保存成功時の処理
-     })
-     .catch(function (error){
-         //失敗時の処理
-     });
+    ////////////////////////////////////////////
      //ランキングの取得
     highScore.order("score", true)
     .limit(5)
@@ -422,8 +472,9 @@ document.addEventListener('init', function(event) {
     })
     .catch(function(err){
       //エラー時の処理
+      alert('err');
     });
-    /////////////////////////////////////////////////
+    ///////////////////////////////////////////////
    
     //bgm
     result_music.play();
@@ -471,6 +522,14 @@ document.addEventListener('init', function(event) {
       document.querySelector('#navigator').pushPage('game_stage2.html');
 
       stage = 2;//ステージ2を登録
+    };
+  }
+  if (page.matches('#stage_choose-page')) {
+    // ゲーム画面へ
+    page.querySelector('#push-stage3-button').onclick = function() {
+      document.querySelector('#navigator').pushPage('game_stage3.html');
+
+      stage = 3;//ステージ3を登録
     };
   }
 
