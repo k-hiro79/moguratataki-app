@@ -297,17 +297,17 @@ class Main{
     start_music.play();
   }, false);
 
-  const game_music = new Audio('./bgm/たいへんだ〜！_2.mp3');
+  const game_music = new Audio('./bgm/game.mp3');
   game_music.loop = true;
   game_music.addEventListener("ended",()=>{
     game_music.currentTime = 0;
     game_music.play();   
   }, false);
 
-  const click_sound = new Audio("./bgm/打撃音2.mp3");
+  const click_sound = new Audio("./bgm/click_sound.mp3");
   click_sound.preload = "auto";
 
-  const whistle = new Audio("./bgm/syuuryou.mp3");
+  const whistle = new Audio("./bgm/whistle.mp3");
   const countdown_sound = new Audio("./bgm/Countdown.mp3");
 
 
