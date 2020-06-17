@@ -561,9 +561,9 @@ document.addEventListener('init', function(event) {
     page.querySelector('#pop-start-button').onclick = function() {
       document.querySelector('#navigator').popPage({times: 4});
       //bgm
-      result_music.pause();
-      result_music.currentTime = 0;
-      start_music.play();
+      // result_music.pause();
+      // result_music.currentTime = 0;
+      // start_music.play();
     };
   } 
 });

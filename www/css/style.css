@@ -7,7 +7,7 @@ body{
 .content_start{
   padding-top: 35px;
   height: 100%;
-  background-image:url(../img/result.png) !important;
+  background-image:url(../img/kokubann.jpg) !important;
   background-size: cover;
 }
 /* スタージ選択画面 */
@@ -61,47 +61,102 @@ body{
   background-size: cover;
 }
 /* -------------------------------------------------------------------------- */
+.touroku_form{
+  text-align: left;
+  width: 95%;
+  margin: 0 auto;
+}
+.start_btn{
+  width: 27%;
+  padding: 10px;
+  background-color: rgb(172, 83, 11);
+  color: yellow;
+  font-size: 17px;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  text-shadow: 1px 3px 2px #0c0b0c;
+  user-select: none;
+  border-radius: 25px;
+}
 
 /* スタート画面タイトル */
+.content_start{
+  position: relative;
+}
 .content_start .title{
+  position: absolute;
+  top: 40%;
+  left: 7%;
   width: 80%;
+  z-index: 4;
   text-align: center;
-  margin: 0 auto;
-  background: whitesmoke;
-  border-radius: 20px;
-  font-size: 45px;
-  font-weight: bold;
-  color: chocolate;
+  line-height: 200%;
+  padding: 10px;
+  font-size: 50px;
+  font-weight: 900;
+  color: rgba(27, 231, 180, 0.795);
+  text-shadow: 3px 4px 20px #ffffff;
 } 
 
 /* スタート画面イラスト */
-.vs{
-  width: 100%;
-  height:150px;
-  padding: 25px 0;
-  margin: 5px auto;
-  display: flex;
-  justify-content: space-between;
+.man{
+  position: absolute;
+  left: -10%;
+  width: 60%;
+  height: 40%;
+  text-align: left;
+  z-index: 2;
 }
-.vs img{
-  width:150px;
-  height:170px;
+.man2{
+  position: absolute;
+  top: 5%;
+  left: 15%;
+  width: 85%;
+  height: 50%;
+  text-align: left;
+  z-index: 1;
 }
-.vs .mark{
-  margin-top: 40px;
-  width:50px;
-  height:120px;
+.vs_mark{
+  position: absolute;
+  top: 35%;
+  left: 5%;
+  width: 90%;
+  text-align: left;
 }
-
-/* スタート画面設定文 */
-.syoukaibun{
-  width: 80%;
-  margin: 0 auto;
-  margin-bottom: 30px;
-  color:white;
-  background-image: url(../img/hyouka.png);
-  background-size: cover;
-  padding: 25px;
+.mogura{
+  position: absolute;
+  top: 60%;
+  left: 35%;
+  width: 65%;
+  height: 40%;
+  text-align: left;
+}  
+.mogura2{
+  position: absolute;
+  top: 60%;
+  left: -15%;
+  width: 70%;
+  height: 40%;
+  text-align: left;
+}
+.transition_stage{
+  position: absolute;
+  top: 80%;
+  left: 2%;
+  width: 30%;
+  line-height: 100%;
+}
+.transition_rule{
+  position: absolute;
+  top: 80%;
+  left: 35%;
+  width: 30%;
+}
+.transition_rank{
+  position: absolute;
+  top: 80%;
+  left: 68%;
+  width: 30%;
 }
 
 /* ルール説明画面 */

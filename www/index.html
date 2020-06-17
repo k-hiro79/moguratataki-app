@@ -61,20 +61,22 @@
     <!--スタート画面-->
     <ons-template id="start.html">
       <ons-page id="start-page">
-
+        
+        
         <div class="content_start" style="text-align: center">
-          <h1 class="title">モグラと遊ぶ<br>休み時間<span class="two">Ⅱ</span></h1>
-          <div class="vs">
-            <img class="man" src="./img/pose_pistol_man.png" alt="">
-            <img class="mark" src="./img/text_versus_vs.png" alt="">
-            <img src="./img/mogura.png" alt="">
-          </div>
-          <p class="syoukaibun">外出自粛が終わり、みんながやっと学校に行けるようになった！久しぶりに学校に行ってみると、、、
-          なんと！！グラウンドがモグラたちに荒らされて穴だらけになっている!休み時間を使ってみんなでモグラを退治しよう！
-          </p>
-          <ons-button id="push-button">ステージ選択</ons-button>
-          <ons-button id="push-rule-button">ルール説明</ons-button>
-          <ons-button id="push-ranking-button">ランキング</ons-button>
+          <form class="touroku_form" action="">
+            <input class="start_btn" type="button" value="ログイン">
+            <input class="start_btn" type="button" value="新規登録">
+          </form>
+          <h1 class="title">モグラと遊ぶ<br>休み時間</h1>
+          <img class="man" src="./img/pose_pistol_man.png" alt="">
+          <img class="man2" src="./img/start_man2.png" alt="">
+          <img class="vs_mark" src="./img/text_versus_vs.png" alt="">
+          <img class="mogura" src="./img/mogura.png" alt="">
+          <img class="mogura2" src="./img/mogura2.png" alt="">
+          <ons-button class="start_btn transition_stage" id="push-button">ステージ<br>選択</ons-button>
+          <ons-button class="start_btn transition_rule" id="push-rule-button">ルール説明</ons-button>
+          <ons-button class="start_btn transition_rank" id="push-ranking-button">ランキング</ons-button>
         </div>
       </ons-page>
     </ons-template>
