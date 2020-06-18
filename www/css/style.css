@@ -61,12 +61,19 @@ body{
   background-size: cover;
 }
 /* -------------------------------------------------------------------------- */
-.touroku_form{
+.users_form{
+  position: absolute;
+  top: 5%;
+  z-index: 3;
   text-align: left;
   width: 95%;
+  height: 6%;
   margin: 0 auto;
+  display: flex;
+  justify-content: space-evenly;
 }
 .start_btn{
+  display: block;
   width: 27%;
   padding: 10px;
   background-color: rgb(172, 83, 11);
@@ -78,6 +85,9 @@ body{
   user-select: none;
   border-radius: 25px;
 }
+.start_btn:active{
+  opacity: 0.5;
+}
 
 /* スタート画面タイトル */
 .content_start{
@@ -88,7 +98,7 @@ body{
   top: 40%;
   left: 7%;
   width: 80%;
-  z-index: 4;
+  z-index: 3;
   text-align: center;
   line-height: 200%;
   padding: 10px;
@@ -101,9 +111,10 @@ body{
 /* スタート画面イラスト */
 .man{
   position: absolute;
+  top: 15%;
   left: -10%;
   width: 60%;
-  height: 40%;
+  height: 30%;
   text-align: left;
   z-index: 2;
 }
@@ -159,6 +170,68 @@ body{
   width: 30%;
 }
 
+#login_form{
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  padding: 30px;
+  top: 30%;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  text-align: center;
+  border-radius: 8px;
+  transition: 0.5s;
+  background-color: whitesmoke;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+  z-index: 5;
+}
+#login_form.hidden{
+  transform:translateY(-1000px);
+}
+
+#new_register_form{
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  padding: 30px;
+  top: 30%;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  text-align: center;
+  border-radius: 8px;
+  transition: 0.5s;
+  background-color: whitesmoke;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+  z-index: 5;
+}
+#new_register_form.hidden{
+  transform:translateY(-1000px);
+}
+
+.value{
+  margin: 0;
+  margin-top: 15px;
+  text-align: left;
+}
+.btn_flex{
+  display: flex;
+  justify-content: space-between;
+}
+
+.back_btn{
+  display: block;
+  margin-top: 20px;
+  width: 40%;
+  padding: 5px;
+  background-color: rgb(31, 109, 226);
+  color: whitesmoke;
+  font-size: 17px;
+  font-weight: bold;
+  user-select: none;
+  border-radius: 15px;
+}
 /* ルール説明画面 */
 .rule{
   padding: 0;
@@ -234,7 +307,6 @@ body{
   background-size: cover;
 }
 
-
 .special_rule{
   list-style: none;
   margin: 0;
@@ -298,7 +370,7 @@ body{
   padding: 25px;
   font-weight: bold;
   font-size: 25px;
-  z-index: 2;
+  z-index: 5;
 }
 
 #start:not([value="スタート！"]){
@@ -317,11 +389,11 @@ body{
   top: -50px;
   left: 0;
   right: 0;
-  width: 1000px;
-  height: 1000px;
+  width: 100%;
+  height: 107%;
   background: black;
   opacity: 0.5;
-  z-index: 1;
+  z-index: 4;
 }
 
 /* ゲーム画面ゲーム終了時のフォーム */
@@ -339,7 +411,7 @@ body{
   transition: 0.5s;
   background-color: whitesmoke;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
-  z-index: 2;
+  z-index: 5;
 }
 
 #countdown{
@@ -358,7 +430,7 @@ body{
   transition: 0.2s;
   background-color: whitesmoke;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
-  z-index: 2;
+  z-index: 5;
 }
 
 #countdown.hidden{

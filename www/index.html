@@ -61,13 +61,11 @@
     <!--スタート画面-->
     <ons-template id="start.html">
       <ons-page id="start-page">
-        
-        
         <div class="content_start" style="text-align: center">
-          <form class="touroku_form" action="">
-            <input class="start_btn" type="button" value="ログイン">
-            <input class="start_btn" type="button" value="新規登録">
-          </form>
+          <div class="users_form">
+            <input id="login_btn" class="start_btn" type="button" value="ログイン">
+            <input id="touroku_btn" class="start_btn" type="button" value="新規登録">
+          </div>
           <h1 class="title">モグラと遊ぶ<br>休み時間</h1>
           <img class="man" src="./img/pose_pistol_man.png" alt="">
           <img class="man2" src="./img/start_man2.png" alt="">
@@ -77,6 +75,30 @@
           <ons-button class="start_btn transition_stage" id="push-button">ステージ<br>選択</ons-button>
           <ons-button class="start_btn transition_rule" id="push-rule-button">ルール説明</ons-button>
           <ons-button class="start_btn transition_rank" id="push-ranking-button">ランキング</ons-button>
+
+          <section class="hidden" id="login_form">
+            <p class="value">ユーザー名</p>
+            <input type="text" value="">
+            <p class="value">パスワード</p>
+            <input type="text" value="">
+            <div class="btn_flex">
+              <input id="back_login_btn" class="back_btn" type="button" value="戻る">
+              <input class="back_btn" type="button" value="ログイン">
+            </div>
+          </section>
+
+          <section class="hidden" id="new_register_form">
+            <p class="value">ユーザー名</p>
+            <input type="text" value="">
+            <p class="value">パスワード</p>
+            <input type="text" value="">
+            <div class="btn_flex">
+              <input id="back_new_register_btn" class="back_btn" type="button" value="戻る">
+              <input class="back_btn" type="button" value="登録">
+            </div>
+          </section>
+          <div id="start_black"></div>
+          
         </div>
       </ons-page>
     </ons-template>

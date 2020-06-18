@@ -1,16 +1,16 @@
 // APIキーの設定とSDK初期化
-var ncmb = new NCMB("0c9a82e830db0ad436ded1fe381fc5e425f03a2bbf094646cb3ab55ad2de5282","012325c75e891197034ff06d13928b66ba75a54d7936719c6507599d6173028b");
+// var ncmb = new NCMB("0c9a82e830db0ad436ded1fe381fc5e425f03a2bbf094646cb3ab55ad2de5282","012325c75e891197034ff06d13928b66ba75a54d7936719c6507599d6173028b");
 
 
 // スコアの保存
 // ハイスコアのクラス作成
-var ScoreClass = ncmb.DataStore("HighScore");
+// var ScoreClass = ncmb.DataStore("HighScore");
 
 // スコア格納用
 let scores = [0,0,0,0,0];
 
 // ハイスコアインスタンス生成
-var highScore = ncmb.DataStore("HighScore");
+// var highScore = ncmb.DataStore("HighScore");
 
 ///////////// 画像位置指定 /////
 var ana_n = new Image(); 
@@ -257,17 +257,17 @@ class Main{
       /////////////////////スコア保存///////////////////
       // インスタンス生成
       tokutenn = this.m_toku_now;
-      var score = new ScoreClass();
-      score.set("score", tokutenn);
-      score.save()
-       .then(function (){
-           //保存成功時の処理
-           console.log('score_ok');
-       })
-       .catch(function (error){
-           //失敗時の処理
-           console.log(error);
-       });
+      // var score = new ScoreClass();
+      // score.set("score", tokutenn);
+      // score.save()
+      //  .then(function (){
+      //      //保存成功時の処理
+      //      console.log('score_ok');
+      //  })
+      //  .catch(function (error){
+      //      //失敗時の処理
+      //      console.log(error);
+      //  });
       /////////////////////////////////////////////////
       this.m_toku_now = 0;
       stage = 0;
@@ -327,24 +327,44 @@ document.addEventListener('init', function(event) {
   //////////////////////////スタート画面/////////////////////////////////
   if (page.matches('#start-page')) {
 
-    //現在のランキングの取得
-    highScore.order("score", true)
-    .limit(5)
-    .fetchAll()
-    .then(function(results){
-      //ランキング取得後の処理
-      for (let i = 0; i < results.length; i++) {
-        let object= results[i];
-        scores[i] = object.score;
-        console.log(scores[i]);
-      }
-    })
-    .catch(function(err){
-      //エラー時の処理
-      console.log('err');
-    });
+    // //現在のランキングの取得
+    // highScore.order("score", true)
+    // .limit(5)
+    // .fetchAll()
+    // .then(function(results){
+    //   //ランキング取得後の処理
+    //   for (let i = 0; i < results.length; i++) {
+    //     let object= results[i];
+    //     scores[i] = object.score;
+    //     console.log(scores[i]);
+    //   }
+    // })
+    // .catch(function(err){
+    //   //エラー時の処理
+    //   console.log('err');
+    // });
+    
     //bgm
     start_music.play();
+
+    document.getElementById('login_btn').addEventListener('click',()=>{
+      document.getElementById('start_black').classList.add('black_back');
+      document.getElementById('login_form').classList.remove('hidden');
+    });
+    document.getElementById('back_login_btn').addEventListener('click',()=>{
+      document.getElementById('start_black').classList.remove('black_back');
+      document.getElementById('login_form').classList.add('hidden');
+    });
+    document.getElementById('touroku_btn').addEventListener('click',()=>{
+      document.getElementById('start_black').classList.add('black_back');
+      document.getElementById('new_register_form').classList.remove('hidden');
+    });
+    document.getElementById('back_new_register_btn').addEventListener('click',()=>{
+      document.getElementById('start_black').classList.remove('black_back');
+      document.getElementById('new_register_form').classList.add('hidden');
+    });
+    
+
     // ステージ選択画面へ
     page.querySelector('#push-button').onclick = function() {
       document.querySelector('#navigator').pushPage('stage_choose.html');
@@ -458,22 +478,22 @@ document.addEventListener('init', function(event) {
   //////////////////////////////////////リザルト画面//////////////////////////
   if (page.matches('#result-page')) {
     ////////////////////////////////////////////
-     //ランキングの取得
-    highScore.order("score", true)
-    .limit(5)
-    .fetchAll()
-    .then(function(results){
-      //ランキング取得後の処理
-      for (let i = 0; i < results.length; i++) {
-        let object= results[i];
-        scores[i] = object.score;
-        console.log(scores[i]);
-      }
-    })
-    .catch(function(err){
-      //エラー時の処理
-      alert('err');
-    });
+    //  //ランキングの取得
+    // highScore.order("score", true)
+    // .limit(5)
+    // .fetchAll()
+    // .then(function(results){
+    //   //ランキング取得後の処理
+    //   for (let i = 0; i < results.length; i++) {
+    //     let object= results[i];
+    //     scores[i] = object.score;
+    //     console.log(scores[i]);
+    //   }
+    // })
+    // .catch(function(err){
+    //   //エラー時の処理
+    //   alert('err');
+    // });
     ///////////////////////////////////////////////
    
     //bgm
