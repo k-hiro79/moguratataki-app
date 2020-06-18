@@ -78,27 +78,27 @@
 
           <section class="hidden" id="login_form">
             <p class="value">ユーザー名</p>
-            <input type="text" value="">
+            <input class="input" id="registered_username" type="text" value="">
             <p class="value">パスワード</p>
-            <input type="text" value="">
+            <input class="input" id="registered_password" type="password" value="">
             <div class="btn_flex">
               <input id="back_login_btn" class="back_btn" type="button" value="戻る">
-              <input class="back_btn" type="button" value="ログイン">
+              <input id="login" class="back_btn" type="button" value="ログイン">
             </div>
           </section>
 
           <section class="hidden" id="new_register_form">
             <p class="value">ユーザー名</p>
-            <input type="text" value="">
+            <input class="input" id="username" type="text" value="">
             <p class="value">パスワード</p>
-            <input type="text" value="">
+            <input class="input" id="password" type="password" value="">
             <div class="btn_flex">
               <input id="back_new_register_btn" class="back_btn" type="button" value="戻る">
-              <input class="back_btn" type="button" value="登録">
+              <input id="register" class="back_btn" type="button" value="登録">
             </div>
           </section>
           <div id="start_black"></div>
-          
+
         </div>
       </ons-page>
     </ons-template>
@@ -197,61 +197,61 @@
         <div class="content_game1" id="second" style="text-align: center">
           <div class="game" align="center"> 
               
-              <div class="info" name="FORM1">
-                <div class="infobox">
-                  <b>SCORE</b>
-                  <h3 class="var" id="score">0</h3>
-                </div>
-                <div class="infobox">
-                  <b>TIME</b>
-                  <h3 class="var" id="time">0</h3>
-                </div>
-              </div>        
-              <!-- モグラテーブル -->
-              
-              <div class="moguratataki">
-                <!-- width="64" height="64"  -->
-                <!-- 1行目 -->
-                <img id="mogu_click0" name="item0">
-                <img id="mogu_click1" name="item1">
-                <img id="mogu_click2" name="item2">
-                <img id="mogu_click3" name="item3">
-                <!-- ２行目 -->
-                <img id="mogu_click4" name="item4">
-                <img id="mogu_click5" name="item5">
-                <img id="mogu_click6" name="item6">
-                <img id="mogu_click7" name="item7">
-                <!-- ３行目 -->
-                <img id="mogu_click8" name="item8">
-                <img id="mogu_click9" name="item9">
-                <img id="mogu_click10" name="item10">
-                <img id="mogu_click11" name="item11">
-                <!-- ４行目 -->
-                <img id="mogu_click12" name="item12">
-                <img id="mogu_click13" name="item13">
-                <img id="mogu_click14" name="item14">
-                <img id="mogu_click15" name="item15"> 
-                <!-- ５行目 -->
-                <img id="mogu_click16" name="item16">
-                <img id="mogu_click17" name="item17">
-                <img id="mogu_click18" name="item18">                    
-                <img id="mogu_click19" name="item19">
-                <!-- ６行目 -->
-                <img id="mogu_click20" name="item20">
-                <img id="mogu_click21" name="item21">
-                <img id="mogu_click22" name="item22">
-                <img id="mogu_click23" name="item23">
+            <div class="info" name="FORM1">
+              <div class="infobox">
+                <b>SCORE</b>
+                <h3 class="var" id="score">0</h3>
               </div>
-              <input id="start" TYPE="button" value="スタート！" name="button">
-              <div class="black_back" id="black"></div>
-              <!-- カウントダウンフォーム -->
-              <section class="hidden" id="countdown"></section>
-              <!-- 時間切れフォーム -->
-              <section class="hidden" id="stop">
-                <h2>そこまで！</h2>
-                <h2>どれくらい叩けたかな？</h2>
-                <ons-button id="push-button">評価をもらおう！</ons-button>
-              </section>
+              <div class="infobox">
+                <b>TIME</b>
+                <h3 class="var" id="time">0</h3>
+              </div>
+            </div>        
+            <!-- モグラテーブル -->
+            
+            <div class="moguratataki">
+              <!-- width="64" height="64"  -->
+              <!-- 1行目 -->
+              <img id="mogu_click0" name="item0">
+              <img id="mogu_click1" name="item1">
+              <img id="mogu_click2" name="item2">
+              <img id="mogu_click3" name="item3">
+              <!-- ２行目 -->
+              <img id="mogu_click4" name="item4">
+              <img id="mogu_click5" name="item5">
+              <img id="mogu_click6" name="item6">
+              <img id="mogu_click7" name="item7">
+              <!-- ３行目 -->
+              <img id="mogu_click8" name="item8">
+              <img id="mogu_click9" name="item9">
+              <img id="mogu_click10" name="item10">
+              <img id="mogu_click11" name="item11">
+              <!-- ４行目 -->
+              <img id="mogu_click12" name="item12">
+              <img id="mogu_click13" name="item13">
+              <img id="mogu_click14" name="item14">
+              <img id="mogu_click15" name="item15"> 
+              <!-- ５行目 -->
+              <img id="mogu_click16" name="item16">
+              <img id="mogu_click17" name="item17">
+              <img id="mogu_click18" name="item18">                    
+              <img id="mogu_click19" name="item19">
+              <!-- ６行目 -->
+              <img id="mogu_click20" name="item20">
+              <img id="mogu_click21" name="item21">
+              <img id="mogu_click22" name="item22">
+              <img id="mogu_click23" name="item23">
+            </div>
+            <input id="start" TYPE="button" value="スタート！" name="button">
+            <div class="black_back" id="black"></div>
+            <!-- カウントダウンフォーム -->
+            <section class="hidden" id="countdown"></section>
+            <!-- 時間切れフォーム -->
+            <section class="hidden" id="stop">
+              <h2>そこまで！</h2>
+              <h2>どれくらい叩けたかな？</h2>
+              <ons-button id="push-button">評価をもらおう！</ons-button>
+            </section>
           </div>
         </div>
       </ons-page>

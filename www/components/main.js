@@ -1,16 +1,25 @@
 // APIキーの設定とSDK初期化
-// var ncmb = new NCMB("0c9a82e830db0ad436ded1fe381fc5e425f03a2bbf094646cb3ab55ad2de5282","012325c75e891197034ff06d13928b66ba75a54d7936719c6507599d6173028b");
+var ncmb = new NCMB("0c9a82e830db0ad436ded1fe381fc5e425f03a2bbf094646cb3ab55ad2de5282","012325c75e891197034ff06d13928b66ba75a54d7936719c6507599d6173028b");
 
 
 // スコアの保存
 // ハイスコアのクラス作成
-// var ScoreClass = ncmb.DataStore("HighScore");
+var ScoreClass = ncmb.DataStore("HighScore");
 
-// スコア格納用
+//Userインスタンスの生成
+var user = new ncmb.User();
+
+//プレイユーザー格納用 
+let username;
+
+// ランクインスコア格納用
 let scores = [0,0,0,0,0];
 
+// ランクインユーザー格納用
+let users = ["","","","",""];
+
 // ハイスコアインスタンス生成
-// var highScore = ncmb.DataStore("HighScore");
+var highScore = ncmb.DataStore("HighScore");
 
 ///////////// 画像位置指定 /////
 var ana_n = new Image(); 
@@ -257,17 +266,18 @@ class Main{
       /////////////////////スコア保存///////////////////
       // インスタンス生成
       tokutenn = this.m_toku_now;
-      // var score = new ScoreClass();
-      // score.set("score", tokutenn);
-      // score.save()
-      //  .then(function (){
-      //      //保存成功時の処理
-      //      console.log('score_ok');
-      //  })
-      //  .catch(function (error){
-      //      //失敗時の処理
-      //      console.log(error);
-      //  });
+      var score = new ScoreClass();
+      score.set("score", tokutenn);
+      score.set("name", username);
+      score.save()
+       .then(function (){
+           //保存成功時の処理
+           console.log('score_ok');
+       })
+       .catch(function (error){
+           //失敗時の処理
+           console.log(error);
+       });
       /////////////////////////////////////////////////
       this.m_toku_now = 0;
       stage = 0;
@@ -328,22 +338,27 @@ document.addEventListener('init', function(event) {
   if (page.matches('#start-page')) {
 
     // //現在のランキングの取得
-    // highScore.order("score", true)
-    // .limit(5)
-    // .fetchAll()
-    // .then(function(results){
-    //   //ランキング取得後の処理
-    //   for (let i = 0; i < results.length; i++) {
-    //     let object= results[i];
-    //     scores[i] = object.score;
-    //     console.log(scores[i]);
-    //   }
-    // })
-    // .catch(function(err){
-    //   //エラー時の処理
-    //   console.log('err');
-    // });
-    
+    highScore.order("score", true)
+    .limit(5)
+    .fetchAll()
+    .then(function(results){
+      //ランキング取得後の処理
+      for (let i = 0; i < results.length; i++) {
+        let object= results[i];
+        scores[i] = object.score;
+      if(object.name === undefined){
+        users[i] = "unknown";
+      }
+      else{
+        users[i] = object.name;
+      }
+        }
+      })
+    .catch(function(err){
+      //エラー時の処理
+      console.log('err');
+    });
+
     //bgm
     start_music.play();
 
@@ -364,6 +379,48 @@ document.addEventListener('init', function(event) {
       document.getElementById('new_register_form').classList.add('hidden');
     });
     
+    ////////////////////////////////新規登録処理////////////////////////////////////
+    document.getElementById('register').addEventListener('click',()=>{
+      if(document.getElementById('username').value !== "" && document.getElementById('password').value !== ""){
+        // ユーザー名・パスワードを設定
+        user.set("userName", document.getElementById('username').value) /* ユーザー名 */
+        .set("password", document.getElementById('password').value) /* パスワード */
+        // ユーザーの新規登録処理
+        user.signUpByAccount()
+        .then(function(){
+          // 登録後処理
+          alert('登録が完了しました！ログインしてください！')
+        })
+        .catch(function(err){
+          // エラー処理
+          alert(err);
+        });
+      }
+      else{
+        alert('ユーザー名かパスワードが入力されていません。');
+      }
+    });
+    ////////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////ログイン処理/////////////////////////
+    document.getElementById('login').addEventListener('click',()=>{
+      if(document.getElementById('registered_username').value !== "" && document.getElementById('registered_password').value !== ""){
+        // 1. ユーザー名とパスワードでログイン
+        ncmb.User.login(document.getElementById('registered_username').value, document.getElementById('registered_password').value)
+        .then(function(data){
+          // ログイン後処理
+          username = document.getElementById('registered_username').value;
+          alert(username+'さん！こんにちは！')
+        })
+        .catch(function(err){
+          // エラー処理
+          alert('ユーザー名かパスワードが違います。');
+        });
+      }
+      else{
+        alert('ユーザー名かパスワードが入力されていません。');
+      }
+    });
 
     // ステージ選択画面へ
     page.querySelector('#push-button').onclick = function() {
@@ -479,21 +536,26 @@ document.addEventListener('init', function(event) {
   if (page.matches('#result-page')) {
     ////////////////////////////////////////////
     //  //ランキングの取得
-    // highScore.order("score", true)
-    // .limit(5)
-    // .fetchAll()
-    // .then(function(results){
-    //   //ランキング取得後の処理
-    //   for (let i = 0; i < results.length; i++) {
-    //     let object= results[i];
-    //     scores[i] = object.score;
-    //     console.log(scores[i]);
-    //   }
-    // })
-    // .catch(function(err){
-    //   //エラー時の処理
-    //   alert('err');
-    // });
+    highScore.order("score", true)
+    .limit(5)
+    .fetchAll()
+    .then(function(results){
+      //ランキング取得後の処理
+      for (let i = 0; i < results.length; i++) {
+        let object= results[i];       
+        scores[i] = object.score;
+        if(object.name === undefined){
+          users[i] = "unknown";
+        }
+        else{
+          users[i] = object.name;
+        }
+      }
+    })
+    .catch(function(err){
+      //エラー時の処理
+      alert('err');
+    });
     ///////////////////////////////////////////////
    
     //bgm
@@ -559,6 +621,8 @@ document.addEventListener('init', function(event) {
         
     //画像用要素配列
     const rank_img_numbers = new Array(4);
+    // ユーザー用要素配列
+    const rank_users = new Array(4);
     // スコア用要素配列
     const rank_scores  = new Array(4);
     
@@ -569,7 +633,13 @@ document.addEventListener('init', function(event) {
       rank_img_numbers[i].classList.add('rank_img');
       rank_img_numbers[i].src = rank_img[i];
       document.getElementById(`number${i+1}`).appendChild(rank_img_numbers[i]);
-      
+
+      // ユーザー追加
+      rank_users[i] = document.createElement('h2');
+      rank_users[i].classList.add('rank_score');
+      rank_users[i].textContent = users[i];
+      document.getElementById(`number${i+1}`).appendChild(rank_users[i]);
+
       // スコア追加
       rank_scores[i] = document.createElement('h2');
       rank_scores[i].classList.add('rank_score');
