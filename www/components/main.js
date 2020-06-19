@@ -1,13 +1,13 @@
+'use strict';
+
 // APIキーの設定とSDK初期化
-var ncmb = new NCMB("0c9a82e830db0ad436ded1fe381fc5e425f03a2bbf094646cb3ab55ad2de5282","012325c75e891197034ff06d13928b66ba75a54d7936719c6507599d6173028b");
+// var ncmb = new NCMB("0c9a82e830db0ad436ded1fe381fc5e425f03a2bbf094646cb3ab55ad2de5282","012325c75e891197034ff06d13928b66ba75a54d7936719c6507599d6173028b");
 
-
-// スコアの保存
 // ハイスコアのクラス作成
-var ScoreClass = ncmb.DataStore("HighScore");
+// var ScoreClass = ncmb.DataStore("HighScore");
 
 //Userインスタンスの生成
-var user = new ncmb.User();
+// var user = new ncmb.User();
 
 //プレイユーザー格納用 
 let username;
@@ -19,33 +19,12 @@ let scores = [0,0,0,0,0];
 let users = ["","","","",""];
 
 // ハイスコアインスタンス生成
-var highScore = ncmb.DataStore("HighScore");
-
-///////////// 画像位置指定 /////
-var ana_n = new Image(); 
-ana_n.src = "./img/ana01.gif";  //穴だけの画像  
-
-var ana_ten = new Array(3);
-ana_ten[0] = new Image(); ana_ten[0].src = "./img/ana101.gif";//
-ana_ten[1] = new Image(); ana_ten[1].src = "./img/ana102.gif";//10点画像
-ana_ten[2] = new Image(); ana_ten[2].src = "./img/ana103.gif";//
-ana_ten[3] = new Image(); ana_ten[3].src = "./img/ana104.gif";//10点画像破壊後
-
-var ana_thr = new Array(3);
-ana_thr[0] = new Image(); ana_thr[0].src = "./img/ana301.gif";//
-ana_thr[1] = new Image(); ana_thr[1].src = "./img/ana302.gif";//30点画像
-ana_thr[2] = new Image(); ana_thr[2].src = "./img/ana303.gif";//
-ana_thr[3] = new Image(); ana_thr[3].src = "./img/ana304.gif";//30点画像破壊後
-
-var ana_ten_m = new Array(3);
-ana_ten_m[0] = new Image(); ana_ten_m[0].src = "./img/ana111.gif";//
-ana_ten_m[1] = new Image(); ana_ten_m[1].src = "./img/ana112.gif";//-10点画像
-ana_ten_m[2] = new Image(); ana_ten_m[2].src = "./img/ana113.gif";//
-ana_ten_m[3] = new Image(); ana_ten_m[3].src = "./img/ana114.gif";//-10点画像破壊後
+// var highScore = ncmb.DataStore("HighScore");
 
 let stage = 0;//ステージ変数
 let tokutenn=0;//得点格納
 
+// ランキング使用画像
 const rank_img  = [
   "./img/ranking_1.png",
   "./img/ranking_2.png",
@@ -54,9 +33,31 @@ const rank_img  = [
   "./img/ranking_5.png"
 ];
 
+// モグラの穴一覧
+const ana_images = {
+  ten:["./img/ana101.gif","./img/ana102.gif","./img/ana103.gif","./img/ana104.gif"],
+  thirty:["./img/ana301.gif","./img/ana302.gif","./img/ana303.gif","./img/ana304.gif"],
+  minus_ten:["./img/ana111.gif","./img/ana112.gif","./img/ana113.gif","./img/ana114.gif"]
+};
+
+
 //////////////////////////モグラたたきメイン//////ここから↓////////////////////
 class Main{
   constructor(m_speed,m_time,m_max){
+    //////////////////// 画像位置指定 ///////////////////
+    this.ana_n = new Image(); 
+    this.ana_n.src = "./img/ana01.gif";  //穴だけの画像  
+    this.ana_ten = new Array(3);
+    this.ana_thr = new Array(3);
+    this.ana_ten_m = new Array(3);
+    for(let i = 0; i < this.ana_ten.length; i++){
+      this.ana_ten[i] = new Image(); 
+      this.ana_ten[i].src = ana_images.ten[i];
+      this.ana_thr[i] = new Image();
+      this.ana_thr[i].src = ana_images.thirty[i];
+      this.ana_ten_m[i] = new Image();
+      this.ana_ten_m[i].src = ana_images.minus_ten[i];
+    }
     ////////////// 情報設定 //////////////////////////////////
     this.m_speed = m_speed;  //スピード
     this.m_time = m_time;  //ゲーム時間（秒）
@@ -181,15 +182,15 @@ class Main{
       }
       /////得点ごとに画像の種類分け
       if ( this.m_joutai[i] == 0 ){
-        document.images["item" + i].src = ana_n.src;
+        document.images["item" + i].src = this.ana_n.src;
       }else if (this.m_j_point[i] == 10){ 
-        document.images["item" + i].src = ana_ten[this.xyz].src;
+        document.images["item" + i].src = this.ana_ten[this.xyz].src;
         this.m_joutai[i]++;
       }else if (this.m_j_point[i] == -10){ 
-        document.images["item" + i].src = ana_ten_m[this.xyz].src;
+        document.images["item" + i].src = this.ana_ten_m[this.xyz].src;
         this.m_joutai[i]++;
       }else if (this.m_j_point[i] == 30){ 
-        document.images["item" + i].src = ana_thr[this.xyz].src;
+        document.images["item" + i].src = this.ana_thr[this.xyz].src;
         this.m_joutai[i]++;
       }         
       // モグラ消滅
@@ -266,23 +267,23 @@ class Main{
       /////////////////////スコア保存///////////////////
       // インスタンス生成
       tokutenn = this.m_toku_now;
-      var score = new ScoreClass();
-      score.set("score", tokutenn);
-      score.set("name", username);
-      score.save()
-       .then(function (){
-           //保存成功時の処理
-           console.log('score_ok');
-       })
-       .catch(function (error){
-           //失敗時の処理
-           console.log(error);
-       });
+      // var score = new ScoreClass();
+      // score.set("score", tokutenn);
+      // score.set("name", username);
+      // score.save()
+      //  .then(function (){
+      //      //保存成功時の処理
+      //      console.log('score_ok');
+      //  })
+      //  .catch(function (error){
+      //      //失敗時の処理
+      //      console.log(error);
+      //  });
       /////////////////////////////////////////////////
       this.m_toku_now = 0;
       stage = 0;
       for (let i = 0; i < 24; i++){
-        document.images["item" + i].src = ana_n.src;
+        document.images["item" + i].src = this.ana_n.src;
       }
 
       // bgm
@@ -336,29 +337,28 @@ document.addEventListener('init', function(event) {
 
   //////////////////////////スタート画面/////////////////////////////////
   if (page.matches('#start-page')) {
-
-    // //現在のランキングの取得
-    highScore.order("score", true)
-    .limit(5)
-    .fetchAll()
-    .then(function(results){
-      //ランキング取得後の処理
-      for (let i = 0; i < results.length; i++) {
-        let object= results[i];
-        scores[i] = object.score;
-      if(object.name === undefined){
-        users[i] = "unknown";
-      }
-      else{
-        users[i] = object.name;
-      }
-        }
-      })
-    .catch(function(err){
-      //エラー時の処理
-      console.log('err');
-    });
-
+    //////////////////////現在のランキングの取得//////////////////
+    // highScore.order("score", true)
+    // .limit(5)
+    // .fetchAll()
+    // .then(function(results){
+    //   //ランキング取得後の処理
+    //   for (let i = 0; i < results.length; i++) {
+    //     let object= results[i];
+    //     scores[i] = object.score;
+    //   if(object.name === undefined){
+    //     users[i] = "unknown";
+    //   }
+    //   else{
+    //     users[i] = object.name;
+    //   }
+    //     }
+    //   })
+    // .catch(function(err){
+    //   //エラー時の処理
+    //   console.log('err');
+    // });
+    //////////////////////////////////////////////////////////////
     //bgm
     start_music.play();
 
@@ -478,6 +478,7 @@ document.addEventListener('init', function(event) {
     start_music.currentTime = 0;
     // インスタンス生成
     const main = new Main(2,25,3);//スピード,ゲーム時間（秒）,モグラの最大数
+    
     // スタートボタンが押されたとき
     document.getElementById('start').addEventListener('click', ()=>{
       main.m_start();
@@ -536,26 +537,26 @@ document.addEventListener('init', function(event) {
   if (page.matches('#result-page')) {
     ////////////////////////////////////////////
     //  //ランキングの取得
-    highScore.order("score", true)
-    .limit(5)
-    .fetchAll()
-    .then(function(results){
-      //ランキング取得後の処理
-      for (let i = 0; i < results.length; i++) {
-        let object= results[i];       
-        scores[i] = object.score;
-        if(object.name === undefined){
-          users[i] = "unknown";
-        }
-        else{
-          users[i] = object.name;
-        }
-      }
-    })
-    .catch(function(err){
-      //エラー時の処理
-      alert('err');
-    });
+    // highScore.order("score", true)
+    // .limit(5)
+    // .fetchAll()
+    // .then(function(results){
+    //   //ランキング取得後の処理
+    //   for (let i = 0; i < results.length; i++) {
+    //     let object= results[i];       
+    //     scores[i] = object.score;
+    //     if(object.name === undefined){
+    //       users[i] = "unknown";
+    //     }
+    //     else{
+    //       users[i] = object.name;
+    //     }
+    //   }
+    // })
+    // .catch(function(err){
+    //   //エラー時の処理
+    //   alert('err');
+    // });
     ///////////////////////////////////////////////
    
     //bgm
@@ -637,23 +638,24 @@ document.addEventListener('init', function(event) {
       // ユーザー追加
       rank_users[i] = document.createElement('h2');
       rank_users[i].classList.add('rank_score');
+      rank_users[i].classList.add('border');
       rank_users[i].textContent = users[i];
-      document.getElementById(`number${i+1}`).appendChild(rank_users[i]);
+      document.getElementById(`info_number${i+1}`).appendChild(rank_users[i]);
 
       // スコア追加
       rank_scores[i] = document.createElement('h2');
       rank_scores[i].classList.add('rank_score');
       rank_scores[i].textContent = scores[i] + '点';
-      document.getElementById(`number${i+1}`).appendChild(rank_scores[i]);
+      document.getElementById(`info_number${i+1}`).appendChild(rank_scores[i]);
     }
 
     // スタート画面へ
     page.querySelector('#pop-start-button').onclick = function() {
       document.querySelector('#navigator').popPage({times: 4});
       //bgm
-      // result_music.pause();
-      // result_music.currentTime = 0;
-      // start_music.play();
+      result_music.pause();
+      result_music.currentTime = 0;
+      start_music.play();
     };
   } 
 });

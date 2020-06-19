@@ -8,6 +8,9 @@
     <script src="components/mogura_beta.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="lib/onsenui/js/onsenui.min.js"></script>
+    <!-- 要素作成用 -->
+    <script src="components/create_element.js"></script>
+    <!--  ------------------------- -->
     <!-- メイン -->
     <script src="components/main.js"></script>
     <!-- -------------------------- -->
@@ -26,7 +29,7 @@
     // リザルト画面評価の入力
     document.addEventListener('init', function(event) {
       const evaluation = document.getElementById('evaluation');
-      const comment = document.getElementById('result_bun');
+      const comment = document.getElementById('result_text');
       var page = event.target;
       if (page.matches('#result-page')) {
         //評価とコメントの入力
@@ -34,21 +37,29 @@
         // 評価C
         if(tokutenn < 250){
           evaluation.textContent=list[3].evaluation;
+          evaluation.style.color = "purple";
+          document.getElementById('tokutenn').style.color = "purple";
           comment.textContent=list[3].comment;
         }
         // 評価B
         else if(tokutenn >=250 && tokutenn < 500){
           evaluation.textContent=list[2].evaluation;
+          evaluation.style.color = "rgb(7, 161, 7)";
+          document.getElementById('tokutenn').style.color = "rgb(7, 161, 7)";
           comment.textContent=list[2].comment;
         }
         // 評価A
         else if(tokutenn >=500 && tokutenn < 900){
-          evaluation.textContent=list[2].evaluation;
-          comment.textContent=list[2].comment;
+          evaluation.textContent=list[1].evaluation;
+          evaluation.style.color = "silver";
+          document.getElementById('tokutenn').style.color = "silver";
+          comment.textContent=list[1].comment;
         }
         // 評価S
         else if(tokutenn >= 900){
           evaluation.textContent=list[0].evaluation;
+          evaluation.style.color = "gold";
+          document.getElementById('tokutenn').style.color = "gold";
           comment.textContent=list[0].comment;
         }
       }
@@ -63,8 +74,8 @@
       <ons-page id="start-page">
         <div class="content_start" style="text-align: center">
           <div class="users_form">
-            <input id="login_btn" class="start_btn" type="button" value="ログイン">
-            <input id="touroku_btn" class="start_btn" type="button" value="新規登録">
+            <input id="login_btn" class="btn" type="button" value="ログイン">
+            <input id="touroku_btn" class="btn" type="button" value="新規登録">
           </div>
           <h1 class="title">モグラと遊ぶ<br>休み時間</h1>
           <img class="man" src="./img/pose_pistol_man.png" alt="">
@@ -72,9 +83,9 @@
           <img class="vs_mark" src="./img/text_versus_vs.png" alt="">
           <img class="mogura" src="./img/mogura.png" alt="">
           <img class="mogura2" src="./img/mogura2.png" alt="">
-          <ons-button class="start_btn transition_stage" id="push-button">ステージ<br>選択</ons-button>
-          <ons-button class="start_btn transition_rule" id="push-rule-button">ルール説明</ons-button>
-          <ons-button class="start_btn transition_rank" id="push-ranking-button">ランキング</ons-button>
+          <ons-button class="btn transition_stage" id="push-button">ステージ<br>選択</ons-button>
+          <ons-button class="btn transition_rule" id="push-rule-button">遊び方</ons-button>
+          <ons-button class="btn transition_rank" id="push-ranking-button">ランキング</ons-button>
 
           <section class="hidden" id="login_form">
             <p class="value">ユーザー名</p>
@@ -156,36 +167,30 @@
     <!-- ルール説明画面 -->
     <ons-template id="rule.html">
       <ons-page id="rule-page">
-
         <div class="content_rule" style="text-align: center">
-          <div class="rule">
-            <h2 class="rule_title">ルール説明！</h2>
-            <div class="sousa">
-              <h2>操作方法</h2>
-              <ul>
-                <li>タップでモグラを退治しよう！</li>
-                <li>モグラには複数種類がいるぞ！得点が高いモグラもいれば減点されるモグラもいるぞ！</li>
-              </ul>
-            </div>
-            <div class="target">
-              <h2>ターゲットはこいつらだ！</h2>
-              <div class="mogura">
-                <div class="mogurasyoukai">
-                  <img src="./img/ana303.gif" alt="">              
-                  <p>30点の看板を掲げたモグラ。<br>本体は中に隠れているがタップして壊すと逃げていくぞ！</p>
-                </div>
-                <div class="mogurasyoukai">
-                  <img src="./img/ana113.gif" alt="">
-                  <p>-10点の看板を掲げたモグラ。<br>本体は中に隠れているがタップして壊すと逃げていくぞ！</p>
-                </div>
-                <div class="mogurasyoukai">
-                  <img src="./img/ana103.gif" alt="">
-                  <p>10点の看板を掲げたモグラ。<br>本体は中に隠れているがタップして壊すと逃げていくぞ！</p>
-                </div>
-              </div>
-            </div>
+          <h2 class='rule_title'>遊び方！</h2>
+          <ul class="rule_list">
+            <li>学校のいろんな場所に穴を作ってしまったモグラたちと遊ぼう！</li>
+            <li>タップでモグラたちが持っている看板を壊そう！</li>
+            <li>モグラたちが持っている看板には得点が書いてあるぞ！</li>
+          </ul>
+          <div class="mogura-info">
+            <img src="./img/ana103.gif" alt="">
+            <img src="./img/ana303.gif" alt="">
+            <img src="./img/ana113.gif" alt="">
           </div>
-          <ons-button id="pop-button" >戻る</ons-button>
+          <img class="yajirushi" src="./img/yajirushi.png" alt="">
+          <p class="yajirushi_example">10の看板をタップしたとすると、、、</p>
+          <div class="mogura-info change">
+            <img src="./img/ana104.gif" alt="">
+            <img src="./img/ana303.gif" alt="">
+            <img src="./img/ana113.gif" alt="">
+          </div>
+          <p class="yajirushi_example bottom">10の看板に✖印がつき得点に10点追加されるぞ！</p>
+          <ul class="rule_list bottom-list">
+            <li>ステージは3種類！ステージごとにプレイ時間が違ったりボーナス点が入るぞ！</li>
+          </ul>
+          <ons-button class="btn back_start2" id="pop-button" >戻る</ons-button>
         </div>
       </ons-page>
     </ons-template>
@@ -248,9 +253,8 @@
             <section class="hidden" id="countdown"></section>
             <!-- 時間切れフォーム -->
             <section class="hidden" id="stop">
-              <h2>そこまで！</h2>
-              <h2>どれくらい叩けたかな？</h2>
-              <ons-button id="push-button">評価をもらおう！</ons-button>
+              <h2>そこまで！<br>どれくらい叩けたかな？</h2>
+              <ons-button class="btn" id="push-button">評価をもらおう！</ons-button>
             </section>
           </div>
         </div>
@@ -316,9 +320,8 @@
               <section class="hidden" id="countdown"></section>
               <!-- 時間切れフォーム -->
               <section class="hidden" id="stop">
-                <h2>そこまで！</h2>
-                <h2>どれくらい叩けたかな？</h2>
-                <ons-button id="push-button">教室に戻ろう！</ons-button>
+                <h2>そこまで！<br>どれくらい叩けたかな？</h2>
+                <ons-button class="btn" id="push-button">評価をもらおう！</ons-button>
               </section>
           </div>
         </div>
@@ -384,9 +387,8 @@
               <section class="hidden" id="countdown"></section>
               <!-- 時間切れフォーム -->
               <section class="hidden" id="stop">
-                <h2>そこまで！</h2>
-                <h2>どれくらい叩けたかな？</h2>
-                <ons-button id="push-button">教室に戻ろう！</ons-button>
+                <h2>そこまで！<br>どれくらい叩けたかな？</h2>
+                <ons-button class="btn" id="push-button">評価をもらおう！</ons-button>
               </section>
           </div>
         </div>
@@ -399,16 +401,16 @@
     <ons-template id="result.html">
       <ons-page id="result-page">
         <div class="content_result" style="text-align: center">
-          <div class="result">
-            <h2 class="kekka">結果発表！</h2>
-            <h1 class="tennsuu"><span id='tokutenn'></span>点</h1>
-            <div class="hyouka">
-              <h2 class="daimei">評価<span id="evaluation"></span></h2>
-              <p id="result_bun"></p>
-            </div>
+          <h2 class="result_title">結果発表！</h2>
+          <h1 class="score"><span id='tokutenn'></span>点</h1>
+          <div class="hyouka">
+            <h2 class="evaluation_title">スコア<span id="evaluation"></span></h2>
+            <p id="result_text"></p>
           </div>
-          <ons-button id="pop-button">スタート画面に戻る</ons-button>
-          <ons-button id="push-button">ランキングを見る</ons-button>
+          <div class="result_transition">
+            <ons-button class="btn result_btn" id="pop-button">タイトルに戻る</ons-button>
+            <ons-button class="btn result_btn" id="push-button">ランキング</ons-button>
+          </div>
         </div>
       </ons-page>
     </ons-template>
@@ -418,15 +420,23 @@
     <ons-template id="ranking.html">
       <ons-page id="ranking-page">
         <div class="content_ranking" style="text-align: center">
-          <div class="ranking">
-            <h2 class="ranking_title">スコアランキング</h2>
-            <div class="rank" id="number1"></div>
-            <div class="rank" id="number2"></div>
-            <div class="rank" id="number3"></div>
-            <div class="rank" id="number4"></div>
-            <div class="rank" id="number5"></div>
+          <h2 class="ranking_title">スコアランキング</h2>
+          <div class="rank" id="number1">
+            <div id="info_number1"></div>
           </div>
-          <ons-button id="pop-start-button">スタート画面に戻る</ons-button>
+          <div class="rank" id="number2">
+            <div id="info_number2"></div>
+          </div>
+          <div class="rank" id="number3">
+            <div id="info_number3"></div>
+          </div>
+          <div class="rank" id="number4">
+            <div id="info_number4"></div>
+          </div>
+          <div class="rank" id="number5">
+            <div id="info_number5"></div>
+          </div>
+          <ons-button class="btn back_start" id="pop-start-button">スタート画面に戻る</ons-button>
         </div>
       </ons-page>
     </ons-template>
